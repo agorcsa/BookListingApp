@@ -12,7 +12,7 @@ public class Book {
     //The author of the book
     private String mAuthor;
 
-    // The location of the earthquake
+    // Book title
     private String mName;
 
     private String mUrl;
@@ -20,7 +20,7 @@ public class Book {
     /**
      * Constructs a new {@link Book} object.
      *
-     * @param year   is the year of publication of the book
+     * @param year  is the year of publication of the book
      * @param author is the author who wrote the book
      * @param name   is the name of the book
      */
@@ -43,7 +43,6 @@ public class Book {
         return mName;
     }
 
-    public String getUrl() {
-        return mUrl;
-    }
+    public String getUrl() {return mUrl;}
+
 }

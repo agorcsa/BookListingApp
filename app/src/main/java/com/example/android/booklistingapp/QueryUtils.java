@@ -77,7 +77,7 @@ public class QueryUtils {
                 String publishedDate = volumeInfo.getString("publishedDate");
 
                 // Extract the value for the key called "url"
-                String url = volumeInfo.getString("url");
+                String url = currentBook.getString("selfLink");
 
                 // Create a new {@link Book} object with the magnitude, location, time,
                 // and url from the JSON response.

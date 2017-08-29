@@ -19,11 +19,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <SearchView
+            android:id="@+id/searchBar"
+            android:onClick="onClickPeLupa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </SearchView>
+    </LinearLayout>
+
     <ListView
         android:id="@+id/list"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:divider="@null"
         android:dividerHeight="0dp"/>
 
