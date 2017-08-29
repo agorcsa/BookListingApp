@@ -7,7 +7,7 @@ package com.example.android.booklistingapp;
 public class Book {
 
     //The year of publication of the book
-    private int mYear;
+    private String mYear;
 
     //The author of the book
     private String mAuthor;
@@ -24,14 +24,14 @@ public class Book {
      * @param author is the author who wrote the book
      * @param name   is the name of the book
      */
-    public Book(int year, String author, String name, String url) {
+    public Book(String year, String author, String name, String url) {
         mYear = year;
         mAuthor = author;
         mName = name;
         mUrl = url;
     }
 
-    public int getYear() {
+    public String getYear() {
         return mYear;
     }
 

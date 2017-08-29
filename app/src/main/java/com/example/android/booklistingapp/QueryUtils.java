@@ -70,13 +70,11 @@ public class QueryUtils {
                 // For each author in the authorArray, create an {@link author} object
                 for (int j = 0; j < authorArray.length(); j++) {
 
-                    JSONObject currentAuthor = authorArray.getJSONObject(j);
-
-                   bookAuthor = currentAuthor.getString("authors");
+                   bookAuthor = authorArray.getString(j);
                 }
 
                 // Extract the value for the key called "publishedDate"
-                int publishedDate = volumeInfo.getInt("publishedDate");
+                String publishedDate = volumeInfo.getString("publishedDate");
 
                 // Extract the value for the key called "url"
                 String url = volumeInfo.getString("url");

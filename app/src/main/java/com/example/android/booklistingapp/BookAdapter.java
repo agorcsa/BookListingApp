@@ -37,8 +37,7 @@ public class BookAdapter extends ArrayAdapter<Book> {
 
         //Find the TextView with the ID "bookYear"
         TextView bookYear = (TextView) listItemView.findViewById(R.id.bookYear);
-        int intBookYear = currentBook.getYear();
-        String formattedBookYear = Integer.toString(intBookYear);
+        String formattedBookYear = currentBook.getYear();
         bookYear.setText(formattedBookYear);
 
         //Find the TextView with the ID "bookAuthor"
