@@ -9,11 +9,11 @@
     <ImageView
         android:layout_width="@dimen/image"
         android:layout_height="@dimen/image"
-        android:src="@drawable/book"/>
+        android:src="@drawable/book" />
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/margin"
         android:layout_marginStart="@dimen/margin"
@@ -22,21 +22,16 @@
 
         <TextView
             android:id="@+id/bookAuthor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
-            android:maxLines="1"
+            style="@style/WrapWrap.ListItem"
+            android:maxLines="2"
             android:textAllCaps="true"
             android:textSize="@dimen/smallText"
             tools:text="@string/book_author" />
 
         <TextView
             android:id="@+id/bookName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
+            style="@style/WrapWrap.ListItem"
+            android:maxLines="3"
             android:textColor="@color/black"
             android:textSize="@dimen/bigText"
             tools:text="@string/book_name" />
@@ -44,14 +39,14 @@
 
     <TextView
         android:id="@+id/bookYear"
-        android:layout_width="@dimen/image"
+        android:layout_width="@dimen/dateWidth"
         android:layout_height="@dimen/image"
         android:layout_gravity="center_vertical"
-        android:fontFamily="sans-serif-medium"
         android:layout_marginRight="@dimen/margin"
-        tools:text="2011"
-        android:gravity="center"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="bottom"
         android:textColor="@android:color/black"
-        android:textSize="20sp"/>
+        android:textSize="@dimen/dateTextSize"
+        tools:text="@string/book_year" />
 </LinearLayout>
 

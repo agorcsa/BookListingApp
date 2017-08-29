@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="image">50dp</dimen>
+    <dimen name="dateWidth">70dp</dimen>
     <dimen name="padding">20dp</dimen>
     <dimen name="margin">16dp</dimen>
-    <dimen name="image">50dp</dimen>
-    <dimen name= "smallText">14sp</dimen>
-    <dimen name="bigText">20sp</dimen>
+    //TextSize
+    <dimen name="dateTextSize">12sp</dimen>
+    <dimen name="smallText">14sp</dimen>
+    <dimen name="bigText">18sp</dimen>
+    //ListView separator dimension
+    <dimen name="separator">6px</dimen>
 </resources>

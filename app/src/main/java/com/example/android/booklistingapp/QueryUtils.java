@@ -40,49 +40,36 @@ public class QueryUtils {
         // is formatted, a JSONException exception object will be thrown.
         // Catch the exception so the app doesn't crash, and print the error message to the logs.
         try {
-            // Create a JSONObject from the JSON response string
+            // Create a JSONObject from the JSON response String
             JSONObject baseJsonResponse = new JSONObject(bookJSON);
-
-            // Extract the JSONArray associated with the key called "features",
+            // Extract the JSONArray associated with the key called "items",
             // which represents a list of features (or books).
             JSONArray bookArray = baseJsonResponse.getJSONArray("items");
-
             // For each book in the bookArray, create an {@link Book} object
             for (int i = 0; i < bookArray.length(); i++) {
-
                 // Get a single book at position i within the list of books
                 JSONObject currentBook = bookArray.getJSONObject(i);
-
                 // For a given book, extract the JSONObject associated with the
                 // key called "properties", which represents a list of all properties
                 // for that book.
                 JSONObject volumeInfo = currentBook.getJSONObject("volumeInfo");
-
                 // Extract the value for the key called "title"
                 String title = volumeInfo.getString("title");
-
-
                 //Extract the JSONArray associated with the key called "authors"
                 JSONArray authorArray = volumeInfo.getJSONArray("authors");
-
+                //Initialize the bookAuthor with an empty String
                 String bookAuthor = " ";
-
                 // For each author in the authorArray, create an {@link author} object
                 for (int j = 0; j < authorArray.length(); j++) {
-
-                   bookAuthor = authorArray.getString(j);
+                    bookAuthor = authorArray.getString(j);
                 }
-
                 // Extract the value for the key called "publishedDate"
                 String publishedDate = volumeInfo.getString("publishedDate");
-
                 // Extract the value for the key called "url"
                 String url = currentBook.getString("selfLink");
-
                 // Create a new {@link Book} object with the magnitude, location, time,
                 // and url from the JSON response.
                 Book book = new Book(publishedDate, bookAuthor, title, url);
-
                 // Add the new {@link Book} to the list of books.
                 books.add(book);
             }
