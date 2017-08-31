@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,27 +26,31 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public static final String LOG_TAG = BookActivity.class.getName();
 
-    public static final String USGS_REQUEST_URL = "https://www.googleapis.com/books/v1/volumes?q=android&maxResults=5";
+    /**
+     * Google API URL
+     */
+    private static final String BOOKS_REQUEST_BASE_URL = "https://www.googleapis.com/books/v1/volumes?q=";
+
+    private static final String MAX_RESULTS = "5";
 
     /**
      * Constant value for the book loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
      */
     private static final int BOOK_LOADER_ID = 1;
+    /**
+     * we cahce the list of books cause we want to search through it
+     **/
 
+    private static String mBookTitleSearched = "";
     /**
      * Adapter for the list of books
      */
     private BookAdapter mAdapter;
-
     /**
      * TextView that is displayed when the list is empty
      */
     private TextView mEmptyStateTextView;
-
-    /**
-     * we cahce the list of books cause we want to search through it
-     **/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +80,12 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(websiteIntent);
             }
         });
+
+        loadBooks();
+
+    }
+
+    public void loadBooks() {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         // Get details on the currently active default data network
@@ -86,6 +97,7 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
             // Initialize the loader. Pass in the int ID constant defined above and pass in null for
             // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
             // because this activity implements the LoaderCallbacks interface).
+
             loaderManager.initLoader(BOOK_LOADER_ID, null, this);
         } else {
             // Otherwise, display error
@@ -95,6 +107,12 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
             // Update empty state with no connection error message
             mEmptyStateTextView.setText(R.string.no_internet_connection);
         }
+
+    }
+
+    public void reloadBooks() {
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.restartLoader(BOOK_LOADER_ID, null, this);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,17 +128,35 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                mAdapter.getFilter().filter(newText);
-
+                mBookTitleSearched = newText;
+                reloadBooks();
                 return false;
             }
         });
         return super.onCreateOptionsMenu(menu);
     }
 
+    private String prepareSearchQuery() {
+
+        StringBuilder stringBuilder = new StringBuilder(BOOKS_REQUEST_BASE_URL);
+
+        if (!mBookTitleSearched.isEmpty()) {
+            stringBuilder.append("+intitle:").append(mBookTitleSearched);
+            stringBuilder.append("&maxResults=").append(MAX_RESULTS);
+        } else
+            stringBuilder.append("maxResults=").append(MAX_RESULTS);
+
+        String searchQuery = Uri.parse(stringBuilder.toString()).toString();
+
+        return searchQuery;
+    }
+
     @Override
     public Loader<List<Book>> onCreateLoader(int i, Bundle bundle) {
-        return new BookLoader(this, USGS_REQUEST_URL);
+
+        String searchQuery = prepareSearchQuery();
+        Log.d(LOG_TAG, "uri: " + searchQuery);
+        return new BookLoader(this, searchQuery);
     }
 
     @Override
@@ -137,6 +173,8 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
         if (books != null && !books.isEmpty()) {
             mAdapter.addAll(books);
         }
+
+        Log.d(LOG_TAG, "books found: " + books.size());
     }
 
     @Override

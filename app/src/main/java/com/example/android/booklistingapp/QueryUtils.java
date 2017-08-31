@@ -53,20 +53,39 @@ public class QueryUtils {
                 // key called "properties", which represents a list of all properties
                 // for that book.
                 JSONObject volumeInfo = currentBook.getJSONObject("volumeInfo");
+
                 // Extract the value for the key called "title"
-                String title = volumeInfo.getString("title");
-                //Extract the JSONArray associated with the key called "authors"
-                JSONArray authorArray = volumeInfo.getJSONArray("authors");
+                String title = "<untitled>";
+                try {
+                    title = volumeInfo.getString("title");
+                } catch (JSONException e) {
+                }
+
                 //Initialize the bookAuthor with an empty String
                 String bookAuthor = " ";
-                // For each author in the authorArray, create an {@link author} object
-                for (int j = 0; j < authorArray.length(); j++) {
-                    bookAuthor = authorArray.getString(j);
+                try {
+                    //Extract the JSONArray associated with the key called "authors"
+                    JSONArray authorArray = volumeInfo.getJSONArray("authors");
+                    for (int j = 0; j < authorArray.length(); j++) {
+                        bookAuthor += authorArray.getString(j) + " ";
+                    }
+                } catch (JSONException e) {
                 }
+
                 // Extract the value for the key called "publishedDate"
-                String publishedDate = volumeInfo.getString("publishedDate");
-                // Extract the value for the key called "url"
-                String url = currentBook.getString("selfLink");
+                String publishedDate = "";
+                try {
+                    publishedDate = volumeInfo.getString("publishedDate");
+                } catch (JSONException e) {
+                }
+
+                // Extract the value for the key called "infoLink"
+                String url = "<no_url>";
+                try {
+                    url = volumeInfo.getString("infoLink");
+                } catch (JSONException e) {
+                }
+
                 // Create a new {@link Book} object with the magnitude, location, time,
                 // and url from the JSON response.
                 Book book = new Book(publishedDate, bookAuthor, title, url);
