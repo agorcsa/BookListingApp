@@ -59,6 +59,7 @@ public class QueryUtils {
                 try {
                     title = volumeInfo.getString("title");
                 } catch (JSONException e) {
+                    Log.e("exceptions", "exceptions " + e);
                 }
 
                 //Initialize the bookAuthor with an empty String
@@ -70,6 +71,7 @@ public class QueryUtils {
                         bookAuthor += authorArray.getString(j) + " ";
                     }
                 } catch (JSONException e) {
+                    Log.e("exceptions", "exceptions " + e);
                 }
 
                 // Extract the value for the key called "publishedDate"
@@ -77,6 +79,7 @@ public class QueryUtils {
                 try {
                     publishedDate = volumeInfo.getString("publishedDate");
                 } catch (JSONException e) {
+                    Log.e("exceptions", "exceptions " + e);
                 }
 
                 // Extract the value for the key called "infoLink"
@@ -84,6 +87,7 @@ public class QueryUtils {
                 try {
                     url = volumeInfo.getString("infoLink");
                 } catch (JSONException e) {
+                    Log.e("exceptions", "exceptions " + e);
                 }
 
                 // Create a new {@link Book} object with the magnitude, location, time,
@@ -184,9 +188,6 @@ public class QueryUtils {
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

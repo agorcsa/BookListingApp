@@ -176,8 +176,6 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
         if (books != null && !books.isEmpty()) {
             mAdapter.addAll(books);
         }
-
-        Log.d(LOG_TAG, "books found: " + books.size());
     }
 
     @Override
