@@ -110,6 +110,7 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
+    //Reloads the list of books after the search
     public void reloadBooks() {
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.restartLoader(BOOK_LOADER_ID, null, this);
@@ -121,11 +122,13 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
         MenuItem item = menu.findItem(R.id.menuSearch);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            //Called when the user submits the query
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
 
+            //Called when the query text is changed by the user
             @Override
             public boolean onQueryTextChange(String newText) {
                 mBookTitleSearched = newText;
