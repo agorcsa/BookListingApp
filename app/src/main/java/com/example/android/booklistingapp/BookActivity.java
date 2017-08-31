@@ -112,8 +112,27 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
 
     //Reloads the list of books after the search
     public void reloadBooks() {
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.restartLoader(BOOK_LOADER_ID, null, this);
+
+        // check first if we still have internet connection
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        // Get details on the currently active default data network
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        // If there is a network connection, fetch data
+        if (networkInfo != null && networkInfo.isConnected()) {
+            LoaderManager loaderManager = getLoaderManager();
+            loaderManager.restartLoader(BOOK_LOADER_ID, null, this);
+        } else {
+            // Otherwise, display error
+            // First, hide loading indicator so error message will be visible
+            View loadingIndicator = findViewById(R.id.loading_indicator);
+            loadingIndicator.setVisibility(View.GONE);
+            // Update empty state with no connection error message
+            mEmptyStateTextView.setText(R.string.no_internet_connection);
+
+            // clear old items
+            mAdapter.clear();
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

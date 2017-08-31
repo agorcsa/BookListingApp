@@ -44,7 +44,9 @@ public class QueryUtils {
             JSONObject baseJsonResponse = new JSONObject(bookJSON);
             // Extract the JSONArray associated with the key called "items",
             // which represents a list of features (or books).
-            JSONArray bookArray = baseJsonResponse.getJSONArray("items");
+            JSONArray bookArray = new JSONArray();
+            if (baseJsonResponse.has("items"))
+                bookArray = baseJsonResponse.getJSONArray("items");
             // For each book in the bookArray, create an {@link Book} object
             for (int i = 0; i < bookArray.length(); i++) {
                 // Get a single book at position i within the list of books
@@ -52,12 +54,19 @@ public class QueryUtils {
                 // For a given book, extract the JSONObject associated with the
                 // key called "properties", which represents a list of all properties
                 // for that book.
-                JSONObject volumeInfo = currentBook.getJSONObject("volumeInfo");
+                JSONObject volumeInfo = new JSONObject();
+                try {
+                    if (currentBook.has("volumeInfo"))
+                        volumeInfo = currentBook.getJSONObject("volumeInfo");
+                } catch (JSONException e) {
+                    Log.e("exceptions", "exceptions " + e);
+                }
 
                 // Extract the value for the key called "title"
                 String title = "<untitled>";
                 try {
-                    title = volumeInfo.getString("title");
+                    if (volumeInfo.has("title"))
+                        title = volumeInfo.getString("title");
                 } catch (JSONException e) {
                     Log.e("exceptions", "exceptions " + e);
                 }
@@ -66,9 +75,11 @@ public class QueryUtils {
                 String bookAuthor = " ";
                 try {
                     //Extract the JSONArray associated with the key called "authors"
-                    JSONArray authorArray = volumeInfo.getJSONArray("authors");
-                    for (int j = 0; j < authorArray.length(); j++) {
-                        bookAuthor += authorArray.getString(j) + " ";
+                    if (volumeInfo.has("authors")) {
+                        JSONArray authorArray = volumeInfo.getJSONArray("authors");
+                        for (int j = 0; j < authorArray.length(); j++) {
+                            bookAuthor += authorArray.getString(j) + " ";
+                        }
                     }
                 } catch (JSONException e) {
                     Log.e("exceptions", "exceptions " + e);
@@ -77,7 +88,8 @@ public class QueryUtils {
                 // Extract the value for the key called "publishedDate"
                 String publishedDate = "";
                 try {
-                    publishedDate = volumeInfo.getString("publishedDate");
+                    if (volumeInfo.has(publishedDate))
+                        publishedDate = volumeInfo.getString("publishedDate");
                 } catch (JSONException e) {
                     Log.e("exceptions", "exceptions " + e);
                 }
@@ -85,7 +97,8 @@ public class QueryUtils {
                 // Extract the value for the key called "infoLink"
                 String url = "<no_url>";
                 try {
-                    url = volumeInfo.getString("infoLink");
+                    if (volumeInfo.has("infoLink"))
+                        url = volumeInfo.getString("infoLink");
                 } catch (JSONException e) {
                     Log.e("exceptions", "exceptions " + e);
                 }
