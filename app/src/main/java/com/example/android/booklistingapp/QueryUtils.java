@@ -23,6 +23,7 @@ import static com.example.android.booklistingapp.BookActivity.LOG_TAG;
 public class QueryUtils {
 
     private QueryUtils() {
+
     }
 
     /**

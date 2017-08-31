@@ -39,7 +39,7 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
      */
     private static final int BOOK_LOADER_ID = 1;
     /**
-     * we cahce the list of books cause we want to search through it
+     * we change the list of books cause we want to search through it
      **/
 
     private static String mBookTitleSearched = "";
@@ -60,7 +60,7 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
         ListView bookListView = (ListView) findViewById(R.id.list);
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         bookListView.setEmptyView(mEmptyStateTextView);
-        // Create a new adapter that takes an empty list of earthquakes as input
+        // Create a new adapter that takes an empty list of books as input
         mAdapter = new BookAdapter(this, new ArrayList<Book>());
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
